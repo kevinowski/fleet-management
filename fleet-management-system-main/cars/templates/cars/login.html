@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+{% for message in messages %}
+    <h1>{{message}}</h1>
+{% endfor %}
+
+<div class="content">
+
+<h1>Login</h1>
+
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <div>
+        <label for="username">Username</label><br>
+        <input type="text" class="form-control" name="username" placeholder="username" required >
+    </div>
+    <div>
+        <label for="password">Password</label><br>
+        <input type="password" class="form-control" name="password" placeholder="password" required>
+    </div><br>
+    <button type="submit">Login</button>
+</form>
+New here? <a href="{% url 'register' %}"><b>Register</b></a>
+</div>
+
+{% endblock content %}

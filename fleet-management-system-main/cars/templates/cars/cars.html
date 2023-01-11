@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="content">
+<h1>Available cars:</h1>
+{% for car in cars %}
+<p><h2><a href="{% url "car-detail" car.slug %}">{{car}}</a></h2></p>
+{% endfor %}
+
+</div>
+
+
+{% endblock content %}
