@@ -1,0 +1,53 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}FMS{% endblock title %}</title>
+</head>
+<body>
+    {% block header %}
+    <div class="header">
+      <a href="{% url "starting-page" %}" class="logo">FMS <font size=6>&#9951;</font></a>
+      <div class="header-right">
+          {% if warning and request.user.is_authenticated %}
+          <a href="{% url "services" %}"><span class="warning-icon">&#9888;</span></a>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+          <details>
+            <summary>Pojazdy</summary>
+            <div class="dropdown">
+              {% for car in menu %}<a href="{% url 'car-detail' car.slug %}">{{car}}</a></button>{% endfor %}
+            </div>
+          </details>
+          <a href="{% url "refuel-car" %}">Tankowanie</a>
+          <a href="{% url "report" %}">Zgłoszenie</a>
+          <a href="{% url "add-car" %}">Dodaj pojazd</a>
+          <a href="{% url 'logout' %}">Wyloguj ({{user.username|title}})</a> 
+          {% else %}
+          <a href="{% url 'login' %}">Zaloguj</a>
+          {% endif %}
+      </div>
+    </div>
+    {% endblock header %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+{% block content %}
+<div class="content">
+    <h1>This is content from base.html</h1>
+    <p>you cant reach any data from template you want</p>
+  </div>
+{% endblock content %}
+
+{% block footer %}
+<div class="footer">
+    Fleet Management System by Kevin
+</div>
+{% endblock footer %}
+</body>
+</html>
